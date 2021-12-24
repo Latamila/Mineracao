@@ -1,0 +1,33 @@
+1. Ao realizar a análise de regressão no RapidMiner, qual processo não exige nenhuma seleção de parâmetros ou configuração?
+
+[]Retrieve.
+[]Linear Regression.
+[]Performance.
+[X]Apply Model.
+
+2.Uma vantagem da análise de regressão no Python é que não precisamos dimensionar as variáveis.
+
+
+[]VERDADEIRO
+[X]FALSO
+
+3. A regressão stepwise, realizada no R, tende a proporcionar maior generalização do que a regressão stagewise.
+
+
+[]VERDADEIRO
+[X]FALSO
+
+4. Qual método de análise de regressão proporciona os resultados mais difíceis de interpretar?
+
+[]Regressão de ângulo mínimo.
+[]Regressão stepwise.
+[X]Regressão por vetores de suporte.
+[]Regressão LASSO.
+
+5. Qual componente da análise de regressão é usado para fazer previsões?
+
+
+[X]Inclinação.
+[]Interseção.
+[]Normalidade
+[]Multicolinearidade.
