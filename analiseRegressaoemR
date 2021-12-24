@@ -1,0 +1,66 @@
+# DM_07_03.R
+
+# INSTALAR E CARREGAR PACOTES ##############################
+
+pacman::p_load(lars, caret) # Importando bibliotecas
+
+# DADOS ####################################################
+
+# Importar os dados
+data = read.csv("~/Desktop/winequality-red.csv")
+
+# Definir grupos de variÃ¡veis
+x <- as.matrix(data[-12])
+y <- data[, 12]
+
+# SeleÃ§Ã£o regressiva de caracterÃ­sticas com o algoritmo de 
+# eliminaÃ§Ã£o recursiva de caracterÃ­sticas (RFE, um mÃ©todo
+# incorporado comumente usado com mÃ¡quinas
+# de vetores de suporte)
+ctrl <- rfeControl(method = "repeatedcv",
+          repeats = 5,
+          verbose = TRUE,
+          functions = lmFuncs)
+
+# Isso demora um pouco.
+rfe <- rfe(x, y ,
+         sizes = c(1:11),
+         rfeControl = ctrl)
+
+# Ver resultados chamando o objeto
+rfe
+
+# Manter caracterÃ­sticas identificadas pela RFE
+x <- as.matrix(data[rfe$optVariables])
+
+# MODELOS ADICIONAIS #######################################
+
+# RegressÃ£o stepwise convencional
+stepwise <- lars(x,y, type = "stepwise")
+
+# Stagewise: como a stepwise, mas com melhor generalizaÃ§Ã£o
+forward <- lars(x,y, type = "forward.stagewise")
+
+# LAR: Least Angle Regression, ou regressÃ£o de Ã¢ngulo mÃ­nimo
+lar <- lars(x,y, type= "lar")
+
+# LASSO: Least Absolute Shrinkage and Selection Operator(MINIMOS ABSOLUTOS REDUZIDOS E OPERADOR DE SELEÇÃO
+# ou mÃ­nimos absolutos reduzidos e operador de seleÃ§Ã£o
+lasso <- lars(x, y, type = "lasso")
+
+# ComparaÃ§Ã£o de modelos
+r2comp <- c(stepwise$R2[6], forward$R2[6], 
+            lar$R2[6], lasso$R2[6]) 
+names(r2comp) <- c("stepwise", "forward", "lar", "lasso") 
+r2comp 
+
+# LIMPAR ###################################################
+
+# Limpar espaÃ§o de trabalho
+rm(list = ls()) 
+
+# Limpar pacotes
+pacman::p_unload(lars, caret)
+
+# Limpar console
+cat("\014")  # CTRL+L
